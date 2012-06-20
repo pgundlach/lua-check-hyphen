@@ -1,0 +1,37 @@
+% see lua file for copyright information (MIT License)
+
+\def\luachekchyphenpkgdate{2012/06/19}
+\def\luachekchyphenversion{0.1}
+
+
+\RequirePackage{ifluatex}
+\RequirePackage{luatexbase-attr}
+\RequirePackage{keyval}
+
+\DeclareOption{final}{\setkeys{luacheckhyphen}{final}}
+\DeclareOption*{\setkeys{luacheckhyphen}{\CurrentOption}}
+
+\ProvidesPackage{lua-check-hyphen}[\luachekchyphenpkgdate\space v\luachekchyphenversion\space Hyphenation checking for LuaTeX (PGU)]
+
+
+
+\def\luachekchyphendothings{\directlua{luachekchyphen.enable() }}
+
+\define@key{luacheckhyphen}{final}[true]{\directlua{luachekchyphen.final  = "\luatexluaescapestring{#1}"}}
+\define@key{luacheckhyphen}{mark}[true]{\directlua{luachekchyphen.mark     = "\luatexluaescapestring{#1}"}}
+\define@key{luacheckhyphen}{whitelist}{\directlua{luachekchyphen.whitelist = "\luatexluaescapestring{#1}"}}
+
+
+\ifluatex
+  \AtBeginDocument{\luachekchyphendothings}
+  \directlua{luachekchyphen = require('lua-check-hyphen')}
+  \def\LuaCheckHyphen#1{\setkeys{luacheckhyphen}{#1}}
+  \AtEndDocument{\directlua{luachekchyphen.listhyphenatedwords()}}
+\else
+  \def\LuaCheckHyphen#1{}
+  \message{Warning: lua-check-hyphen only works with LuaTeX (LaTeX format for now)}
+\fi
+
+\ProcessOptions
+
+
