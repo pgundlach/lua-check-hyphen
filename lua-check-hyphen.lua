@@ -1,6 +1,7 @@
-function w( ... )
-  texio.write_nl(string.format(...))
-end
+-- for debugging purpuse:
+-- function w( ... )
+--   texio.write_nl(string.format(...))
+-- end
 
 local explode = function(s,p)
    local t = { }
@@ -21,6 +22,23 @@ luachekchyphen.all_hyphenatedwords = {}
 luachekchyphen.word_whitelist = {}
 luachekchyphen.rectangle = node.new("whatsit","pdf_literal")
 luachekchyphen.rectangle.data = string.format("q 0 0 10 10 re f S Q")
+
+luachekchyphen.deligature = function ( glyph_node )
+  local sln = unicode.utf8
+  local head = glyph_node.components
+  local str = ""
+  while head do
+    if head.id == 37 then
+      if head.components then
+        str = str .. luachekchyphen.deligature(head)
+      else
+        str = str .. sln.char(head.char)
+      end
+    end
+    head = head.next
+  end
+  return str
+end
 
 
 luachekchyphen.collect_discs = function(head)
@@ -49,7 +67,9 @@ luachekchyphen.collect_discs = function(head)
           thisbreakpoint = c
         elseif word_start.id == 37 then
           c = c + 1
-          if sln.match(sln.char(word_start.char),"%a") then
+          if word_start.components then
+            word = word .. luachekchyphen.deligature(word_start)
+          elseif sln.match(sln.char(word_start.char),"%a") then
             word = word .. sln.char(word_start.char)
           end
         end
@@ -77,7 +97,6 @@ luachekchyphen.check_discs = function (head,parent)
       if luachekchyphen.word_whitelist[word] then
       	  -- word found, but OK (whitelisted)
       else
-      	w("put word in list %q",word)
 	      luachekchyphen.all_hyphenatedwords[word] = true
      	  if luachekchyphen.drawmarks then
      	  	tmp = node.copy(luachekchyphen.rectangle)
