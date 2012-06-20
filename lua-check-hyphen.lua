@@ -1,3 +1,8 @@
+-- Copyright 2012 Patrick Gundlach, patrick@gundla.ch
+-- Public repository: https://github.com/pgundlach/lua-check-hyphen (issues/pull requests,...)
+-- Version: see Makefile
+
+
 -- for debugging purpuse:
 -- function w( ... )
 --   texio.write_nl(string.format(...))

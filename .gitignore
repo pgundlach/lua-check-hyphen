@@ -1,0 +1,13 @@
+lua-check-hyphen
+tmp
+sample-crop.pdf
+sample.aux
+sample.log
+sample.pdf
+sample.uhy
+*.tgz
+luacheckhyphenmanual.aux
+luacheckhyphenmanual.log
+luacheckhyphenmanual.out
+luacheckhyphenmanual.pdf
+luacheckhyphenmanual.toc
