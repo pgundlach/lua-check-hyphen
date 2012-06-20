@@ -1,0 +1,92 @@
+\documentclass{ltxdockit}
+\usepackage{dtklogos}
+
+\titlepage{%
+  title={The lua-check-hyphen package},
+  subtitle={Checking your hyphenated words},
+  url={https://github.com/pgundlach/lua-check-hyphen},
+  author={Patrick Gundlach},
+  email={patrick@gundla.ch},
+  revision={0.1},
+  date={\today}}
+
+\hypersetup{%
+  pdftitle={The lua-check-hyphen package},
+  pdfsubject={Checking your hyphenated words},
+  pdfauthor={Patrick Gundlach},
+  pdfkeywords={tex, latex, hyphenation}}
+
+
+
+
+\begin{document}
+\printtitlepage
+\tableofcontents
+
+\section{Introduction}
+
+\TeX\ is pretty good at hyphenating words. But a computer algorithm is not perfect, sometimes we wish to manually check all used hyphenations in a document. This package helps you on this task.
+
+\section{Usage}
+
+This package only works with \LuaTeX. To activate it a
+
+\begin{verbatim}
+	\usepackage{lua-check-hyphen}
+\end{verbatim}
+is enough.
+
+When you process your document with \LuaLaTeX, a file with the suffix \verb|.uhy| is created with that contains every hyphenated word. You can check that file for hyphenation errors.
+
+\section{Advanced usage}
+\label{sec:advanced_usage}
+
+With longer documents it becomes tedious checking for the same hyphenated words over and over. Therefore this package allows you to create a whitelist of \emph{accepted hyphenation}. This whitelist is a simple textfile where the words are separated by whitespace and the allowed hyphenation is marked with a dash (-). You can use the output file \texttt{.uhy} as an input for the whitelist file. You load the file in your document with
+
+\begin{verbatim}
+	\LuaCheckHyphen{whitelist=myfile.txt}
+\end{verbatim}
+
+and a sample file looks like this:
+
+\begin{verbatim}
+seren-ity
+morn-ings
+posses-sion
+\end{verbatim}
+
+or
+
+\begin{verbatim}
+seren-ity morn-ings posses-sion
+\end{verbatim}
+
+The format is not important, the entries must be separated by whitespace.
+
+Words in this whitelist won't be reported. \sty{lua-check-hyphen} assumes that these are valid break points.
+
+You can have more than one whitelist file by giving the filenames separated by comma:
+
+\begin{verbatim}
+	\LuaCheckHyphen{whitelist={file1.txt,file2.txt,file3.txt}}
+\end{verbatim}
+
+\section{Visual marker}
+
+You might want to use the PDF viewer to check for incorrectly hyphenated words. To enable visual feedback, just pass the \texttt{mark} option to the \cmd{usepackage} or to the \cmd{LuaCheckHyphen} command:
+
+\begin{verbatim}
+\usepackage{lua-check-hyphen}
+% or:
+\LuaCheckHyphen{mark}
+\end{verbatim}
+
+This marks all non-whitelisted used hyphenation points in the document with a black square (not to be confused with overfull boxes): 
+
+\includegraphics{sample-crop}
+
+\section{Final document}
+
+When you pass the Option \opt{final} to the \cmd{documentclass}, the \cmd{usepackage} or the \cmd{LuaCheckHyphen} command, all processing is disabled.
+
+\end{document}
