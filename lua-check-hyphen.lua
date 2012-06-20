@@ -75,9 +75,11 @@ luachekchyphen.collect_discs = function(head)
         end
         word_start = word_start.next
       end
-      word_with_hyphen = sln.sub(word,1,thisbreakpoint) .. "-" .. sln.sub(word,thisbreakpoint+1,-1)
-      luachekchyphen.hyphenwords[hyphencounter] = word_with_hyphen
-      hyphencounter = #luachekchyphen.hyphenwords + 1
+      if thisbreakpoint then
+        word_with_hyphen = sln.sub(word,1,thisbreakpoint) .. "-" .. sln.sub(word,thisbreakpoint+1,-1)
+        luachekchyphen.hyphenwords[hyphencounter] = word_with_hyphen
+        hyphencounter = #luachekchyphen.hyphenwords + 1
+      end
     end
     head = head.next
   end
