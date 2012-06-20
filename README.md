@@ -19,3 +19,8 @@ A typical workflow is:
 * add that file to the whitelist (as given above)
 * optionally use the option `mark` to make the unknown hyphenated words visible in the PDF file
 
+
+Copyright 2012 Patrick Gundlach (patrick@gundla.ch)
+Package version: see Makefile
+Public repository: https://github.com/pgundlach/lua-check-hyphen
+Licensed under the MIT license.
