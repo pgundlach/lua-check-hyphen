@@ -55,6 +55,7 @@ luachekchyphen.collect_discs = function(head)
   local c
   local hyphencounter = #luachekchyphen.hyphenwords + 1
   local sln = unicode.utf8
+  local ligature_chars
   while head do
     if head.id == 0 then
     elseif head.id == 7 then --disc
@@ -71,10 +72,12 @@ luachekchyphen.collect_discs = function(head)
           node.set_attribute(head,luachekchyphen.hyphenattr,hyphencounter)
           thisbreakpoint = c
         elseif word_start.id == 37 then
-          c = c + 1
           if word_start.components then
-            word = word .. luachekchyphen.deligature(word_start)
+            ligature_chars = luachekchyphen.deligature(word_start)
+            word = word .. ligature_chars
+            c = c + string.len(ligature_chars)
           elseif sln.match(sln.char(word_start.char),"%a") then
+            c = c + 1
             word = word .. sln.char(word_start.char)
           end
         end
