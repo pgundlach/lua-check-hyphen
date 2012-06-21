@@ -2,6 +2,8 @@ VERSION = 0.1
 DESTDIR = lua-check-hyphen
 DOCDEST = $(DESTDIR)/doc
 
+DOCNAME = luacheckhyphenmanual
+
 DATE_ISO = $(shell date +"%F")
 DATE_TEX = $(shell date +"%Y\/%m\/%d")
 
@@ -41,6 +43,8 @@ sample.pdf: sample.tex
 clean:
 	-rm -rf tmp $(DESTDIR)
 	-rm sample.pdf sample-crop.pdf
+	-rm $(DOCNAME).aux $(DOCNAME).log $(DOCNAME).out $(DOCNAME).pdf $(DOCNAME).toc
+	-rm sample.aux sample.log sample.uhy
 
 zip: clean dist
 	tar czvf lua-check-hyphen-$(VERSION).tgz $(DESTDIR)/*
