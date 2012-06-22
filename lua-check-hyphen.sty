@@ -12,6 +12,8 @@
 \RequirePackage{keyval}
 
 \DeclareOption{final}{\setkeys{luacheckhyphen}{final}}
+\DeclareOption{nofile}{\setkeys{luacheckhyphen}{nofile}}
+
 \DeclareOption*{\setkeys{luacheckhyphen}{\CurrentOption}}
 
 \ProvidesPackage{lua-check-hyphen}[\luachekchyphenpkgdate\space v\luachekchyphenversion\space Hyphenation checking for LuaTeX (PGU)]
@@ -20,6 +22,7 @@
 
 \def\luachekchyphendothings{\directlua{luachekchyphen.enable() }}
 
+\define@key{luacheckhyphen}{nofile}[true]{\directlua{luachekchyphen.nofile  = "\luatexluaescapestring{#1}"}}
 \define@key{luacheckhyphen}{final}[true]{\directlua{luachekchyphen.final  = "\luatexluaescapestring{#1}"}}
 \define@key{luacheckhyphen}{mark}[true]{\directlua{luachekchyphen.mark     = "\luatexluaescapestring{#1}"}}
 \define@key{luacheckhyphen}{whitelist}{\directlua{luachekchyphen.whitelist = "\luatexluaescapestring{#1}"}}

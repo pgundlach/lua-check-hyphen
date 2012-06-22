@@ -1,5 +1,5 @@
 \documentclass{ltxdockit}
-\usepackage{dtklogos}
+\usepackage{dtklogos,csquotes}
 \newcommand\pkgversion{see Makefile}
 
 \titlepage{%
@@ -37,7 +37,7 @@ This package only works with \LuaTeX. To activate it a
 \end{verbatim}
 is enough.
 
-When you process your document with \LuaLaTeX, a file with the suffix \verb|.uhy| is created with that contains every hyphenated word. You can check that file for hyphenation errors.
+When you process your document with \LuaLaTeX, a file with the suffix \verb|.uhy| is created with that contains every hyphenated word. You can check that file for hyphenation errors. With the package option \texttt{nofile}, you can tell the package not to write the external file. In any case the list is written to the log file.
 
 \section{Advanced usage}
 \label{sec:advanced_usage}
@@ -69,7 +69,7 @@ Words in this whitelist won't be reported. \sty{lua-check-hyphen} assumes that t
 You can have more than one whitelist file by giving the filenames separated by comma:
 
 \begin{verbatim}
-	\LuaCheckHyphen{whitelist={file1.txt,file2.txt,file3.txt}}
+\LuaCheckHyphen{whitelist={file1.txt,file2.txt,file3.txt}}
 \end{verbatim}
 
 \section{Visual marker}
@@ -86,8 +86,64 @@ This marks all non-whitelisted used hyphenation points in the document with a bl
 
 \includegraphics{sample-crop}
 
+\section{Options to \cmd{LuaCheckHyphen}}
+
+For the true/false options you don't need to write the \texttt{=true} part. All options except for the \texttt{whitelist} can be passed directly to the package:
+
+\begin{verbatim}
+\usepackage[mark,nofile]{lua-check-hyphen}
+\end{verbatim}
+
+\noindent All options can be set in \cmd{LuaCheckHyphen}.
+
+\begin{verbatim}
+\LuaCheckHyphen{mark,nofile,whitelist=myfile.txt}
+\end{verbatim}
+
+
+\begin{optionlist}
+  \boolitem[false]{mark}{Create visual markers when an unknown hyphenation encountered.}
+  \boolitem[false]{nofile}{Don't write to an external file (\texttt{.uhy}).}
+  \boolitem[false]{file}{Don't do anything. This is for the last document run, no marks will be generated.}
+  \valitem{whitelist}{files}{List of files, separated by \enquote{\texttt{,}}. You need to wrap the filenames in braces \texttt{\textbraceleft...\textbraceright} so that the comma won't be seen as a option separator.}
+\end{optionlist}
+
 \section{Final document}
 
 When you pass the Option \opt{final} to the \cmd{documentclass}, the \cmd{usepackage} or the \cmd{LuaCheckHyphen} command, all processing is disabled.
+
+\section{Changes}
+\begin{changelog}
+ \begin{release}{0.2}{2012-06-22}
+  \item Fix ligature counting error (github issue \#1)
+  \item Add nofile option
+  \item No hyphenation list in the terminal output (log only)
+  \item License details added
+ \end{release}
+\end{changelog}
+
+\section{License}
+
+This file (documentation and the package) is released under the terms of the MIT License. See the file \texttt{mit-license.txt} in the distribution.
+
+% Copyright (c) 2012 Patrick Gundlach
+
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the \enquote{Software}), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+
+% The above copyright notice and this permission notice shall be included in all
+% copies or substantial portions of the Software.
+
+% THE SOFTWARE IS PROVIDED \enquote{AS IS}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
 
 \end{document}

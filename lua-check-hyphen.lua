@@ -125,16 +125,22 @@ luachekchyphen.listhyphenatedwords = function()
 	if luachekchyphen.final == "true" then
 		return
 	end
+  -- don't write if the use has turned that off!
+  if not luachekchyphen.nofile then
     local unknown_hyphenation_filename = tex.jobname .. ".uhy"
     local unknown_hyphenation_file = io.open(unknown_hyphenation_filename,"w")
   
-    texio.write_nl("All words with unknown hyphenation below")
     for k,v in pairs(luachekchyphen.all_hyphenatedwords) do
-  	    texio.write_nl(k)
     	unknown_hyphenation_file:write(k .. "\n")
     end
     unknown_hyphenation_file:close()
-    texio.write_nl("All words with unknown hyphenation above\n")
+  end
+
+  texio.write_nl("log","All words with unknown hyphenation below")
+  for k,v in pairs(luachekchyphen.all_hyphenatedwords) do
+      texio.write_nl("log",k)
+  end
+
 end
 
 luachekchyphen.enable = function()

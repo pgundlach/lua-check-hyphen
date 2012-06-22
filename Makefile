@@ -1,4 +1,4 @@
-VERSION = 0.1
+VERSION = 0.2
 DESTDIR = lua-check-hyphen
 DOCDEST = $(DESTDIR)/doc
 
@@ -16,7 +16,7 @@ dist: doc
 	cp README.md $(DOCDEST)
 	cp lua-check-hyphen.sty $(DESTDIR)
 	cp lua-check-hyphen.lua $(DESTDIR)
-	cp tmp/luacheckhyphenmanual.tex tmp/luacheckhyphenmanual.pdf $(DOCDEST)
+	cp tmp/$(DOCNAME).tex tmp/$(DOCNAME).pdf $(DOCDEST)
 	cp sample.pdf sample.tex $(DOCDEST)
 	perl -pi -e 's/(luachekchyphenversion)\{.*\}/$$1\{$(VERSION)\}/' $(DESTDIR)/lua-check-hyphen.sty
 	perl -pi -e 's/(luachekchyphenpkgdate)\{.*\}/$$1\{$(DATE_TEX)\}/' $(DESTDIR)/lua-check-hyphen.sty
