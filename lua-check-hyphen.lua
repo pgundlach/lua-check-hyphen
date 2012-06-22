@@ -1,5 +1,7 @@
--- Copyright 2012 Patrick Gundlach, patrick@gundla.ch
--- Public repository: https://github.com/pgundlach/lua-check-hyphen (issues/pull requests,...)
+-- Copyright 2012 Patrick Gundlach (patrick@gundla.ch)  
+-- Public repository: https://github.com/pgundlach/lua-check-hyphen  
+-- Licensed under the MIT license. See the file 'mit-license.txt' for exact terms.
+
 -- Version: see Makefile
 
 
