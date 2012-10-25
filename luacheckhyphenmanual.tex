@@ -77,7 +77,7 @@ You can have more than one whitelist file by giving the filenames separated by c
 You might want to use the PDF viewer to check for incorrectly hyphenated words. To enable visual feedback, just pass the \texttt{mark} option to the \cmd{usepackage} or to the \cmd{LuaCheckHyphen} command:
 
 \begin{verbatim}
-\usepackage{lua-check-hyphen}
+\usepackage[mark]{lua-check-hyphen}
 % or:
 \LuaCheckHyphen{mark}
 \end{verbatim}
@@ -121,6 +121,13 @@ When you pass the Option \opt{final} to the \cmd{documentclass}, the \cmd{usepac
   \item License details added
  \end{release}
 \end{changelog}
+
+\section{Bugs}
+
+\begin{itemize}
+  \item Paragraphs that end with \verb+\end{document}+ are ignored. Inserting an empty line or
+        \cmd{par} helps.
+\end{itemize}
 
 \section{License}
 
