@@ -16,6 +16,7 @@ dist: doc
 	cp README.md $(DOCDEST)
 	cp lua-check-hyphen.sty $(DESTDIR)
 	cp lua-check-hyphen.lua $(DESTDIR)
+	cp mit-license.txt $(DOCDEST)
 	cp tmp/$(DOCNAME).tex tmp/$(DOCNAME).pdf $(DOCDEST)
 	cp sample.pdf sample.tex $(DOCDEST)
 	perl -pi -e 's/(luachekchyphenversion)\{.*\}/$$1\{$(VERSION)\}/' $(DESTDIR)/lua-check-hyphen.sty
