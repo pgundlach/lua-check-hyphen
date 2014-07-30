@@ -23,16 +23,19 @@ end
 luacheckhyphen = {}
 
 
-luacheckhyphen.hyphenattr = luatexbase.new_attribute("hyphenattr")
+local hyphenattr = luatexbase.new_attribute("hyphenattr")
+
 luacheckhyphen.hyphenwords = {}
 luacheckhyphen.all_hyphenatedwords = {}
 luacheckhyphen.word_whitelist = {}
 luacheckhyphen.rectangle = node.new("whatsit","pdf_literal")
 luacheckhyphen.rectangle.data = string.format("q 0 0 10 10 re f S Q")
 
-local a_glyph_node = node.id("glyph")
-local a_disc_node  = node.id("disc")
-local a_glue_node  = node.id("glue")
+local a_glyph_node   = node.id("glyph")
+local a_disc_node    = node.id("disc")
+local a_glue_node    = node.id("glue")
+local a_whatsit_node = node.id("whatsit")
+local subtype_rightskip = 9
 
 
 luacheckhyphen.deligature = function ( glyph_node )
@@ -76,7 +79,7 @@ luacheckhyphen.collect_discs = function(head)
 		while word_start and word_start.id ~= a_glue_node do
 			if word_start == head then -- disc
 				-- there is a breakpoint after letter c
-				node.set_attribute(head,luacheckhyphen.hyphenattr,hyphencounter)
+				node.set_attribute(head,hyphenattr,hyphencounter)
 				thisbreakpoint = c
 			elseif word_start.id == a_glyph_node then
 				if word_start.components then
@@ -108,8 +111,10 @@ luacheckhyphen.check_discs = function (head,parent)
 	while head do
 	if head.id < 2 then -- a box, recurse
 		luacheckhyphen.check_discs(head.list,head)
-	elseif head.id == a_disc_node and head.next and head.next.id == a_glue_node then
-		c = node.has_attribute(head,luacheckhyphen.hyphenattr)
+		-- package luashowhyphens has disc-whatsit-rightskip, without luashowhyphens it is disc-rightskip
+	elseif  head.id == a_disc_node and head.next and head.next.id == a_glue_node and head.next.subtype == subtype_rightskip or
+			head.id == a_disc_node and head.next and head.next.next and head.next.id == a_whatsit_node and head.next.next.id == a_glue_node and head.next.next.subtype == subtype_rightskip then
+		c = node.has_attribute(head,hyphenattr)
 		word = luacheckhyphen.hyphenwords[c]
 		if luacheckhyphen.word_whitelist[word] then
 			-- word found, but OK (whitelisted)
