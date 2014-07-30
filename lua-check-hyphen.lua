@@ -30,12 +30,17 @@ luacheckhyphen.word_whitelist = {}
 luacheckhyphen.rectangle = node.new("whatsit","pdf_literal")
 luacheckhyphen.rectangle.data = string.format("q 0 0 10 10 re f S Q")
 
+local a_glyph_node = node.id("glyph")
+local a_disc_node  = node.id("disc")
+local a_glue_node  = node.id("glue")
+
+
 luacheckhyphen.deligature = function ( glyph_node )
   local sln = unicode.utf8
   local head = glyph_node.components
   local str = ""
   while head do
-    if head.id == 37 then
+    if head.id == a_glyph_node then
       if head.components then
         str = str .. luacheckhyphen.deligature(head)
       else
@@ -60,20 +65,20 @@ luacheckhyphen.collect_discs = function(head)
   local ligature_chars
   while head do
     if head.id == 0 then
-    elseif head.id == 7 then --disc
+    elseif head.id == a_disc_node then
       word_start = head
       word_end   = head
-      while word_start.prev and word_start.prev.id ~= 10 do
+      while word_start.prev and word_start.prev.id ~= a_glue_node do
         word_start = word_start.prev
       end
       word = ""
       c = 0
-      while word_start and word_start.id ~= 10 do
+      while word_start and word_start.id ~= a_glue_node do
         if word_start == head then -- disc
           -- there is a breakpoint after letter c
           node.set_attribute(head,luacheckhyphen.hyphenattr,hyphencounter)
           thisbreakpoint = c
-        elseif word_start.id == 37 then
+        elseif word_start.id == a_glyph_node then
           if word_start.components then
             ligature_chars = luacheckhyphen.deligature(word_start)
             word = word .. ligature_chars
@@ -101,9 +106,9 @@ luacheckhyphen.check_discs = function (head,parent)
   local word
   local tmp
   while head do
-    if head.id < 2 then
+    if head.id < 2 then -- a box, recurse
       luacheckhyphen.check_discs(head.list,head)
-    elseif head.id == 7 and head.next and head.next.id == 10 then -- disc
+    elseif head.id == a_disc_node and head.next and head.next.id == a_glue_node then
       c = node.has_attribute(head,luacheckhyphen.hyphenattr)
       word = luacheckhyphen.hyphenwords[c]
       if luacheckhyphen.word_whitelist[word] then
