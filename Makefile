@@ -24,7 +24,7 @@ dist: doc
 	perl -pi -e 's/(^-- Version:).*/$$1 $(VERSION)/' $(DESTDIR)/lua-check-hyphen.lua
 	perl -pi -e 's/(Package version:).*/$$1 $(VERSION)/' $(DOCDEST)/README.md
 	rm -f $(DESTDIR)/README
-	( cd $(DESTDIR) ; ln -s doc/README.md README )
+	( cd $(DESTDIR) ; ln -s doc/README.md README.md )
 
 
 doc: sample.pdf
