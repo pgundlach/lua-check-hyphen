@@ -129,12 +129,12 @@ luacheckhyphen.check_discs = function (head,parent)
 	elseif  head.id == a_disc_node and head.next and head.next.id == a_glue_node and head.next.subtype == subtype_rightskip or
 			head.id == a_disc_node and head.next and head.next.next and head.next.id == a_whatsit_node and head.next.next.id == a_glue_node and head.next.next.subtype == subtype_rightskip then
 		c = node.has_attribute(head,hyphenattr)
-		word = luacheckhyphen.hyphenwords[c]
+		word = sln.lower(luacheckhyphen.hyphenwords[c])
 		if luacheckhyphen.word_whitelist[word] then
 			-- word found, but OK (whitelisted)
 		else
 			if luachekchyphen.compact == nil or luachekchyphen.compact == "true" then
-				local word_without_hyphen = sln.lower(removedash(word))
+				local word_without_hyphen = removedash(word)
 				local tmp = luacheckhyphen.all_hyphenatedwords[word_without_hyphen] or {}
 				tmp[word] = true
 				luacheckhyphen.all_hyphenatedwords[word_without_hyphen] = tmp
