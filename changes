@@ -1,9 +1,0 @@
-Changelog:
-
-0.3:
-  documentation fix
-  add compatibility with showhyphens.sty
-
-0.2:
- fix ligature counting error (#1)
- add nofile option
