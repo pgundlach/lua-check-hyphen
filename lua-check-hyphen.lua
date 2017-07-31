@@ -1,4 +1,4 @@
--- Copyright 2012-2016 Patrick Gundlach (patrick@gundla.ch)
+-- Copyright 2012-2017 Patrick Gundlach (patrick@gundla.ch)
 -- Public repository: https://github.com/pgundlach/lua-check-hyphen
 -- Licensed under the MIT license. See the file 'mit-license.txt' for exact terms.
 
@@ -220,7 +220,11 @@ luacheckhyphen.enable = function()
 		for i,v in ipairs(string.explode(luacheckhyphen.whitelist,",")) do
 			whitelistfile,err = io.open(v)
 			if not whitelistfile then
-				texio.write_nl(err)
+				if err then
+					texio.write_nl(err)
+				else
+					texio.write_nl(string.format("White list %q not found, ignored.",tostring(v)))
+				end
 			else
 				filecontents = whitelistfile:read("*a")
 				for _,entry in ipairs(explode(filecontents,"[^%s]+")) do
