@@ -20,7 +20,7 @@ A typical workflow is:
 * optionally use the option `mark` to make the unknown hyphenated words visible in the PDF file
 
 
-Copyright 2012–2016 Patrick Gundlach (patrick@gundla.ch)<br>
+Copyright 2012–2017 Patrick Gundlach (patrick@gundla.ch)<br>
 Package version: see Makefile<br>
 Public repository: https://github.com/pgundlach/lua-check-hyphen<br>
 Licensed under the MIT license. See the file 'mit-license.txt' for exact terms.<br>

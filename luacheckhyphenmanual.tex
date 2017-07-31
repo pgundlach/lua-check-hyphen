@@ -115,6 +115,9 @@ When you pass the Option \opt{final} to the \cmd{documentclass}, the \cmd{usepac
 
 \section{Changes}
 \begin{changelog}
+\begin{release}{0.5}{2017-07-31}
+  \item Fix error where I can't find a whitelist file, but the io.open() call does not return an error message.
+\end{release}
 \begin{release}{0.4}{2016-04-01}
   \item Compact representation of hyphenated words that occur more than once with different hyphenation positions (option copmact=true).
   \item Sort uhy entries alphabetically and only use lowercase words in the file.
