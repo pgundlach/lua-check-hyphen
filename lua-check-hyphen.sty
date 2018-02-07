@@ -21,11 +21,11 @@
 
 \def\luachekchyphendothings{\directlua{luachekchyphen.enable() }}
 
-\define@key{luacheckhyphen}{nofile}[true]{\directlua{luachekchyphen.nofile  = "\luatexluaescapestring{#1}"}}
-\define@key{luacheckhyphen}{compact}[true]{\directlua{luachekchyphen.compact  = "\luatexluaescapestring{#1}"}}
-\define@key{luacheckhyphen}{final}[true]{\directlua{luachekchyphen.final  = "\luatexluaescapestring{#1}"}}
-\define@key{luacheckhyphen}{mark}[true]{\directlua{luachekchyphen.mark     = "\luatexluaescapestring{#1}"}}
-\define@key{luacheckhyphen}{whitelist}{\directlua{luachekchyphen.whitelist = "\luatexluaescapestring{#1}"}}
+\define@key{luacheckhyphen}{nofile}[true]{\directlua{luachekchyphen.nofile  = "\luaescapestring{#1}"}}
+\define@key{luacheckhyphen}{compact}[true]{\directlua{luachekchyphen.compact  = "\luaescapestring{#1}"}}
+\define@key{luacheckhyphen}{final}[true]{\directlua{luachekchyphen.final  = "\luaescapestring{#1}"}}
+\define@key{luacheckhyphen}{mark}[true]{\directlua{luachekchyphen.mark     = "\luaescapestring{#1}"}}
+\define@key{luacheckhyphen}{whitelist}{\directlua{luachekchyphen.whitelist = "\luaescapestring{#1}"}}
 
 
 \ifluatex
