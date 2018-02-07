@@ -1,4 +1,4 @@
-VERSION = 0.5
+VERSION = 0.6
 DESTDIR = lua-check-hyphen
 DOCDEST = $(DESTDIR)/doc
 
