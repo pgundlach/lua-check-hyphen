@@ -174,6 +174,13 @@ luacheckhyphen.listhyphenatedwords = function()
 	-- don't write if the use has turned that off!
 	if not luacheckhyphen.nofile then
 		local unknown_hyphenation_filename = tex.jobname .. ".uhy"
+		local i = 0
+		while (arg[i] ~= nil) do
+			i = i + 1
+			if ((arg[i] == '--output-directory') or (arg[i] == '-output-directory')) then
+				unknown_hyphenation_filename = arg[i + 1] .. "/" .. unknown_hyphenation_filename
+			end
+		end
 		local unknown_hyphenation_file = io.open(unknown_hyphenation_filename,"w")
 		for k,v in pairsByKeys(luacheckhyphen.all_hyphenatedwords) do
 			if luachekchyphen.compact == "true" or luachekchyphen.compact == nil then
