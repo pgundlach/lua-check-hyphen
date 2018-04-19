@@ -167,20 +167,37 @@ local function pairsByKeys (t)
   return iter
 end
 
+local function getUhyFilename (tex_jobname)
+	local unknown_hyphenation_filename = tex_jobname .. ".uhy"
+	local i = 1
+	local FLAG = '-output-directory'
+	while (arg[i] ~= nil) do
+		local argument = arg[i]
+		if (string.sub(argument, 2, 2) == '-' ) then
+			argument = string.sub(argument, 2)
+		end
+		if (string.sub(argument, 1, string.len(FLAG)) == FLAG) then
+			local prefix = nil
+			if (string.sub(argument, string.len(FLAG)+1, string.len(FLAG)+1) == '=') then
+				prefix = string.sub(argument, string.len(FLAG)+2)
+			else
+				prefix = arg[i+1]
+			end
+			unknown_hyphenation_filename = prefix .. "/" .. unknown_hyphenation_filename
+			break
+		end
+		i = i + 1
+	end
+	return unknown_hyphenation_filename
+end
+
 luacheckhyphen.listhyphenatedwords = function()
 	if luacheckhyphen.final == "true" then
 		return
 	end
 	-- don't write if the use has turned that off!
 	if not luacheckhyphen.nofile then
-		local unknown_hyphenation_filename = tex.jobname .. ".uhy"
-		local i = 0
-		while (arg[i] ~= nil) do
-			i = i + 1
-			if ((arg[i] == '--output-directory') or (arg[i] == '-output-directory')) then
-				unknown_hyphenation_filename = arg[i + 1] .. "/" .. unknown_hyphenation_filename
-			end
-		end
+		local unknown_hyphenation_filename = getUhyFilename(tex.jobname)
 		local unknown_hyphenation_file = io.open(unknown_hyphenation_filename,"w")
 		for k,v in pairsByKeys(luacheckhyphen.all_hyphenatedwords) do
 			if luachekchyphen.compact == "true" or luachekchyphen.compact == nil then
