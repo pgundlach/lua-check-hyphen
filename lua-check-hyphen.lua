@@ -197,7 +197,7 @@ luacheckhyphen.listhyphenatedwords = function()
 	end
 	-- don't write if the use has turned that off!
 	if not luacheckhyphen.nofile then
-		local unknown_hyphenation_filename = getUhyFilename(tex.jobname .. ".uhy")
+		local unknown_hyphenation_filename = getUhyFilename(tex.jobname)
 		local unknown_hyphenation_file = io.open(unknown_hyphenation_filename,"w")
 		for k,v in pairsByKeys(luacheckhyphen.all_hyphenatedwords) do
 			if luachekchyphen.compact == "true" or luachekchyphen.compact == nil then
